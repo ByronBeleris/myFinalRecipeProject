@@ -1,3 +1,4 @@
+import { AuthService } from '../../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
@@ -13,12 +14,14 @@ export class RecipeEditComponent implements OnInit {
   id: number;
   editMode = false;
   recipeForm: FormGroup;
+  userPhoto: null;
 
   constructor(private route: ActivatedRoute,
               private recipeService: RecipeService,
-              private router: Router) {
+              private router: Router,
+              private authService: AuthService) {
   }
-
+  
   ngOnInit() {
     this.route.params
       .subscribe(
@@ -28,6 +31,7 @@ export class RecipeEditComponent implements OnInit {
           this.initForm();
         }
       );
+      this.userPhoto = this.authService.getPhoto()
   }
 
   onSubmit() {
@@ -69,6 +73,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   private initForm() {
+    let recipeAuthor = this.authService.getUserName();
     let recipeName = '';
     let recipeImagePath = '';
     let recipeDescription = '';
@@ -80,7 +85,7 @@ export class RecipeEditComponent implements OnInit {
       recipeImagePath = recipe.imagePath;
       recipeDescription = recipe.description;
       if (recipe['ingredients']) {
-        for (let ingredient of recipe.ingredients) {
+        for (const ingredient of recipe.ingredients) {
           recipeIngredients.push(
             new FormGroup({
               'name': new FormControl(ingredient.name, Validators.required),
@@ -95,6 +100,7 @@ export class RecipeEditComponent implements OnInit {
     }
 
     this.recipeForm = new FormGroup({
+      'author': new FormControl(recipeAuthor),
       'name': new FormControl(recipeName, Validators.required),
       'imagePath': new FormControl(recipeImagePath, Validators.required),
       'description': new FormControl(recipeDescription, Validators.required),

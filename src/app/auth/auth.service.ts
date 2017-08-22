@@ -25,15 +25,15 @@ export class AuthService {
         }
 
       );
-      if (this.error == null){
-      this.router.navigate(['/']);
-      firebase.auth().currentUser.getIdToken()
-      .then(
-        (token: string) => {
-          this.token = token;
-          console.log(firebase.auth().currentUser)}
-      )
-      }
+      // if (this.error == null) {
+      // this.router.navigate(['/']);
+      // firebase.auth().currentUser.getIdToken()
+      // .then(
+      //   (token: string) => {
+      //     this.token = token;
+      //     console.log(firebase.auth().currentUser)}
+      // )
+      // }
 
     }
 
@@ -73,4 +73,22 @@ export class AuthService {
   isAuthenticated() {
     return this.token != null;
   }
+  getUserName() {
+    const user = firebase.auth().currentUser;
+    let author;
+    if (user != null) {
+      author = user.displayName;
+      return author;
+    }
+    
+  }
+  getPhoto() {
+    const user = firebase.auth().currentUser;
+    let photo;
+    if (user != null) {
+      photo = user.photoURL;
+      return photo;
+    }
+  }
+
 }
