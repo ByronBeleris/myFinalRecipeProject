@@ -62,4 +62,11 @@ export class DataStorageService {
         }
       );
   }
+
+
+  storeShoppingList() {
+    const token = this.authService.getToken();
+
+    return this.http.put('https://course-project-38263.firebaseio.com/shopping-list.json?auth=' + token, this.recipeService.getRecipes());
+  }
 }

@@ -1,3 +1,4 @@
+import { DataStorageService } from '../../shared/data-storage.service';
 import { AuthService } from '../../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -19,7 +20,8 @@ export class RecipeEditComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private recipeService: RecipeService,
               private router: Router,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private dataStorageService: DataStorageService) {
   }
   
   ngOnInit() {
@@ -44,6 +46,14 @@ export class RecipeEditComponent implements OnInit {
     } else {
       this.recipeService.addRecipe(this.recipeForm.value);
     }
+    this.dataStorageService.storeRecipes()
+    .subscribe(
+      (response) => {
+      // (response: HttpEvent<Object>) => {
+        console.log(response);
+        // console.log(response.type === HttpEventType.Response);
+      }
+    );
     this.onCancel();
   }
 
