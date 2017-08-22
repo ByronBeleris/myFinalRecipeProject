@@ -16,6 +16,8 @@ export class AuthService {
           displayName: username,
           photoURL: photoUser
         });
+        console.log(this.error);
+        console.log(firebase.auth().currentUser);
       })
       .catch(
         error => {
@@ -25,15 +27,17 @@ export class AuthService {
         }
 
       );
-      // if (this.error == null) {
-      // this.router.navigate(['/']);
+      if ( this.error === undefined) {
+      // this.router.navigate(['/']);               //  Problem with currentUser. Returns null
       // firebase.auth().currentUser.getIdToken()
       // .then(
       //   (token: string) => {
       //     this.token = token;
       //     console.log(firebase.auth().currentUser)}
       // )
-      // }
+      alert('Registration complete. Log in to continue')
+      this.router.navigate(['/signin']);
+      }
 
     }
 
@@ -58,8 +62,11 @@ export class AuthService {
   }
 
   logout() {
-    firebase.auth().signOut();
+    firebase.auth().signOut()
     this.token = null;
+    this.error = undefined;
+    console.log(this.error);
+    console.log(firebase.auth().currentUser);
   }
 
   getToken() {
@@ -82,13 +89,13 @@ export class AuthService {
     }
     
   }
-  getPhoto() {
-    const user = firebase.auth().currentUser;
-    let photo;
-    if (user != null) {
-      photo = user.photoURL;
-      return photo;
-    }
-  }
+  // getPhoto() {
+  //   const user = firebase.auth().currentUser;
+  //   let photo;
+  //   if (user != null) {
+  //     photo = user.photoURL;
+  //     return photo;
+  //   }
+  // }
 
 }

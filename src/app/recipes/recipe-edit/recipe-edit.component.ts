@@ -31,7 +31,6 @@ export class RecipeEditComponent implements OnInit {
           this.initForm();
         }
       );
-      this.userPhoto = this.authService.getPhoto()
   }
 
   onSubmit() {
