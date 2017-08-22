@@ -1,0 +1,14 @@
+.active{
+    background-color: #D0CFCD;
+    /* border: 2px solid black; */
+    
+}
+img{
+    max-height: 80px; 
+    margin:10px;
+    max-width: 80px;
+}
+rStyle{
+    max-width: 30px;
+    min-height: 100px;
+}
