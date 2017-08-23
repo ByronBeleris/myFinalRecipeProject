@@ -1,3 +1,4 @@
+import { AuthService } from '../auth/auth.service';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
@@ -16,8 +17,8 @@ export class RecipeService {
       'A super-tasty Schnitzel - just awesome!',
       'https://upload.wikimedia.org/wikipedia/commons/7/72/Schnitzel.JPG',
       [
-        new Ingredient('Meat', 1),
-        new Ingredient('French Fries', 20)
+        new Ingredient('byron' , 'Meat', 1),
+        new Ingredient('byron' , 'French Fries', 20)
       ]),
     new Recipe(
       'Byron',
@@ -25,12 +26,13 @@ export class RecipeService {
       'What else you need to say?',
       'https://upload.wikimedia.org/wikipedia/commons/b/be/Burger_King_Angus_Bacon_%26_Cheese_Steak_Burger.jpg',
       [
-        new Ingredient('Buns', 2),
-        new Ingredient('Meat', 1)
+        new Ingredient('byron', 'Buns', 2),
+        new Ingredient('byron', 'Meat', 1)
       ])
   ];
 
-  constructor(private slService: ShoppingListService) {}
+  constructor(private slService: ShoppingListService,
+              private authService: AuthService) {}
 
   setRecipes(recipes: Recipe[]) {
     this.recipes = recipes;
@@ -46,6 +48,7 @@ export class RecipeService {
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
+    ingredients['author'] = this.authService.getUserName();
     this.slService.addIngredients(ingredients);
   }
 

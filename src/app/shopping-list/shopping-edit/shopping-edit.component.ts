@@ -1,3 +1,5 @@
+import { DataStorageService } from '../../shared/data-storage.service';
+import { AuthService } from '../../auth/auth.service';
 import {
   Component,
   OnInit,
@@ -22,7 +24,9 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   editedItemIndex: number;
   editedItem: Ingredient;
 
-  constructor(private slService: ShoppingListService) { }
+  constructor(private slService: ShoppingListService,
+              private authService: AuthService,
+              private dataStorageService: DataStorageService) { }
 
   ngOnInit() {
     this.subscription = this.slService.startedEditing
@@ -40,13 +44,20 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm) {
+    let slAuthor = this.authService.getUserName();
     const value = form.value;
-    const newIngredient = new Ingredient(value.name, value.amount);
+    const newIngredient = new Ingredient(slAuthor, value.name, value.amount);
     if (this.editMode) {
       this.slService.updateIngredient(this.editedItemIndex, newIngredient);
     } else {
       this.slService.addIngredient(newIngredient);
     }
+    this.dataStorageService.storeShoppingList()
+    .subscribe(
+      (response) => {
+        console.log(response);
+      }
+    );
     this.editMode = false;
     form.reset();
   }

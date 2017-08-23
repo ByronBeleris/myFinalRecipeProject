@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'recipesUserFilter',
+  name: 'shoppingListUserFilter',
   pure: false
 })
-export class RecipesUserFilterPipe implements PipeTransform {
+export class ShoppingListUserFilterPipe implements PipeTransform {
 
   transform(value: any, filterString: string, propName: string): any {
     const resultArray = [];    

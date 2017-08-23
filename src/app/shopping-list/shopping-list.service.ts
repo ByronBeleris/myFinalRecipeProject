@@ -1,3 +1,4 @@
+import { ShoppingList } from './shopping-list.model';
 import { Ingredient } from '../shared/ingredient.model';
 import { Subject } from 'rxjs/Subject';
 
@@ -5,8 +6,8 @@ export class ShoppingListService {
   ingredientsChanged = new Subject<Ingredient[]>();
   startedEditing = new Subject<number>();
   private ingredients: Ingredient[] = [
-    new Ingredient('Apples', 5),
-    new Ingredient('Tomatoes', 10),
+    new Ingredient('byron' , 'Apples', 5),
+    new Ingredient('byron', 'Tomatoes', 10),
   ];
 
   getIngredients() {
@@ -19,6 +20,10 @@ export class ShoppingListService {
 
   addIngredient(ingredient: Ingredient) {
     this.ingredients.push(ingredient);
+    this.ingredientsChanged.next(this.ingredients.slice());
+  }
+  setIngredients(ingredients: Ingredient[]) {
+    this.ingredients = ingredients;
     this.ingredientsChanged.next(this.ingredients.slice());
   }
 
@@ -39,4 +44,5 @@ export class ShoppingListService {
     this.ingredients.splice(index, 1);
     this.ingredientsChanged.next(this.ingredients.slice());
   }
+  
 }

@@ -1,3 +1,5 @@
+import { ShoppingListService } from '../shopping-list/shopping-list.service';
+import { Ingredient } from './ingredient.model';
 import { concat } from 'rxjs/observable/concat';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -12,7 +14,8 @@ import { AuthService } from '../auth/auth.service';
 export class DataStorageService {
   constructor(private http: HttpClient,
               private recipeService: RecipeService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private slService: ShoppingListService) {
   }
 
   storeRecipes() {
@@ -67,6 +70,35 @@ export class DataStorageService {
   storeShoppingList() {
     const token = this.authService.getToken();
 
-    return this.http.put('https://course-project-38263.firebaseio.com/shopping-list.json?auth=' + token, this.recipeService.getRecipes());
+    return this.http.put('https://course-project-38263.firebaseio.com/shopping-list.json?auth=' + token, this.slService.getIngredients());
+  }
+  getShoppingList() {
+    const token = this.authService.getToken();
+    this.http.get<Ingredient[]>('https://course-project-38263.firebaseio.com/shopping-list.json', {
+      observe: 'body',
+      params: new HttpParams().set('auth', token)
+    })
+      .map(
+        (ingredients) => {
+          for (let ingredient of ingredients) {       //  1
+            if (!ingredient['author']) {
+              ingredient['author'] = '';
+            }
+            if (!ingredient['name']) {
+              ingredient['name'] = '';
+            }
+            if (!ingredient['name']) {
+              ingredient['amount'] = 0;
+            }
+            
+          }
+          return ingredients;
+        }
+      )
+      .subscribe(
+        (ingredients: Ingredient[]) => {
+          this.slService.setIngredients(ingredients);
+        }
+      );
   }
 }

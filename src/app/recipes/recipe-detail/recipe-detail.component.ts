@@ -1,3 +1,4 @@
+import { DataStorageService } from '../../shared/data-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
@@ -17,7 +18,8 @@ export class RecipeDetailComponent implements OnInit {
 
   constructor(private recipeService: RecipeService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private dataStorageService: DataStorageService) {
   }
 
   ngOnInit() {
@@ -36,6 +38,15 @@ export class RecipeDetailComponent implements OnInit {
 
   onAddToShoppingList() {
     this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
+    this.dataStorageService.storeShoppingList()
+    .subscribe(
+      (response) => {
+        console.log(response);
+      }
+    );
+  }
+  hideTog() {
+    this.show = false;
   }
 
   onEditRecipe() {

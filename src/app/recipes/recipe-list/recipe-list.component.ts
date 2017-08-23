@@ -35,6 +35,8 @@ export class RecipeListComponent implements OnInit, OnDestroy {
     this.user = this.authService.getUserName();
     console.log(this.user);
     if (this.user != null){
+        console.log('eftase edw');
+        console.log(this.recipes);
        this.dataStorageService.getRecipes();
     }
   }

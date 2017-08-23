@@ -1,3 +1,5 @@
+import { AuthService } from '../auth/auth.service';
+import { DataStorageService } from '../shared/data-storage.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -12,8 +14,11 @@ import { ShoppingListService } from './shopping-list.service';
 export class ShoppingListComponent implements OnInit, OnDestroy {
   ingredients: Ingredient[];
   private subscription: Subscription;
+  user: any;
 
-  constructor(private slService: ShoppingListService) { }
+  constructor(private slService: ShoppingListService,
+              private dataStorageService: DataStorageService,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.ingredients = this.slService.getIngredients();
@@ -23,6 +28,11 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
           this.ingredients = ingredients;
         }
       );
+      this.user = this.authService.getUserName();
+      console.log(this.user);
+      if (this.user != null){
+         this.dataStorageService.getShoppingList();
+      }
   }
 
   onEditItem(index: number) {
