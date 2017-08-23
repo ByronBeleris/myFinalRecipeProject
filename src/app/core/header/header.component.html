@@ -22,7 +22,11 @@
         <li class="nav-item"><a class="nav-link" (click)="hideTog()" routerLink="/signup">Register</a></li>
         <li class="nav-item"><a class="nav-link" (click)="hideTog()" routerLink="/signin">Login</a></li>
       </ng-template>
-      <li class="nav-item dropdown" appDropdown *ngIf="isAuthenticated()">
+      <li class="nav-item"><a class="nav-link" style="cursor: pointer;" (click)="onLogout(); hideTog()" *ngIf="isAuthenticated()">Logout</a></li>
+      
+      
+      
+      <!-- <li class="nav-item dropdown" appDropdown *ngIf="isAuthenticated()">
         <a style="cursor: pointer;" (click)="toggleManage()" class="nav-link dropdown-toggle" role="button" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage <span class="caret"></span></a>
         <ul class="dropdown-menu" [class.show]="showManage" aria-labelledby="navbarDropdownMenuLink">
           <li><a class="dropdown-item" style="cursor: pointer;" (click)="hideTog()" routerLink="/signin">My profile</a></li>
@@ -31,7 +35,7 @@
             style="cursor: pointer;"
             (click)="onLogout(); hideTog()"
             *ngIf="isAuthenticated()">Logout</a></li>
-        </ul>
+        </ul> -->
     </ul>
   </div>
 </nav>

@@ -34,7 +34,7 @@ export class DataStorageService {
     // return this.http.request(req);
   }
 
-  getRecipes() {
+  getMyRecipes() {
     const UserRecipes: Recipe[] = [];
     const user = this.authService.getUserName();
     const token = this.authService.getToken();
@@ -65,6 +65,26 @@ export class DataStorageService {
           return UserRecipes;
           // console.log(recipes);  // 2
           // return [];             // 2
+        }
+      )
+      .subscribe(
+        (recipes: Recipe[]) => {
+          this.recipeService.setRecipes(recipes);
+        }
+      );
+  }
+  getRecipes() {
+    const token = this.authService.getToken();
+    
+    this.http.get<Recipe[]>('https://course-project-38263.firebaseio.com/recipes.json?auth=' + token) 
+      .map(
+        (recipes) => {
+          for (let recipe of recipes) {       //  1
+            if (!recipe['ingredients']) {
+              recipe['ingredients'] = [];
+            }
+          };
+          return recipes;
         }
       )
       .subscribe(

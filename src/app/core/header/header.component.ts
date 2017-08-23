@@ -17,20 +17,20 @@ export class HeaderComponent {
               private authService: AuthService) {
   }
 
-  onSaveData() {
-    this.dataStorageService.storeRecipes()
-      .subscribe(
-        (response) => {
-        // (response: HttpEvent<Object>) => {
-          console.log(response);
-          // console.log(response.type === HttpEventType.Response);
-        }
-      );
-  }
+  // onSaveData() {
+  //   this.dataStorageService.storeRecipes()
+  //     .subscribe(
+  //       (response) => {
+  //       // (response: HttpEvent<Object>) => {
+  //         console.log(response);
+  //         // console.log(response.type === HttpEventType.Response);
+  //       }
+  //     );
+  // }
 
-  onFetchData() {
-    this.dataStorageService.getRecipes();
-  }
+  // onFetchData() {
+  //   this.dataStorageService.getMyRecipes();
+  // }
 
   onLogout() {
     this.authService.logout();
