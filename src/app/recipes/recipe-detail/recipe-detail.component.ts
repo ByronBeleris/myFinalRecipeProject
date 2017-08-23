@@ -1,5 +1,6 @@
+import { AuthService } from '../../auth/auth.service';
 import { DataStorageService } from '../../shared/data-storage.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Recipe } from '../recipe.model';
@@ -14,15 +15,18 @@ export class RecipeDetailComponent implements OnInit {
   recipe: Recipe;
   id: number;
   show = false;
+  user: any;
   
 
   constructor(private recipeService: RecipeService,
               private route: ActivatedRoute,
               private router: Router,
-              private dataStorageService: DataStorageService) {
+              private dataStorageService: DataStorageService,
+              private authService: AuthService) {
   }
 
   ngOnInit() {
+    
     this.route.params
       .subscribe(
         (params: Params) => {
@@ -37,6 +41,10 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   onAddToShoppingList() {
+    this.user = this.authService.getUserName();
+    this.recipe.ingredients.forEach((item, index) => {
+      item.author = this.user;
+    });
     this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
     this.dataStorageService.storeShoppingList()
     .subscribe(

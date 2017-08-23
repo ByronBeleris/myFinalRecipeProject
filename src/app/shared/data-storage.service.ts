@@ -35,26 +35,34 @@ export class DataStorageService {
   }
 
   getRecipes() {
+    const UserRecipes: Recipe[] = [];
+    const user = this.authService.getUserName();
     const token = this.authService.getToken();
     // const headers = new HttpHeaders().set('Authorization', 'Bearer adfgdsxdfcsd'):  
     //  this wont work with firebase because it makes its own headers
 
-    // this.http.get<Recipe[]>('https://course-project-38263.firebaseio.com/recipes.json?auth=' + token) // 1
-    this.http.get<Recipe[]>('https://course-project-38263.firebaseio.com/recipes.json', {  //2
+    this.http.get<Recipe[]>('https://course-project-38263.firebaseio.com/recipes.json?auth=' + token) // 1
+    // this.http.get<Recipe[]>('https://course-project-38263.firebaseio.com/recipes.json', {  //2
       // observe: 'response',
-      observe: 'body',
+      // observe: 'body',
       // responseType: 'text'  // default is json
       // headers: headers
-      params: new HttpParams().set('auth', token)
-    })
+      // params: new HttpParams().set('auth', token)
+    // })
       .map(
         (recipes) => {
           for (let recipe of recipes) {       //  1
             if (!recipe['ingredients']) {
               recipe['ingredients'] = [];
             }
-          }
-          return recipes;
+          };
+          recipes.forEach((item, index) => {
+            if (user === item.author){
+              UserRecipes.push(item);
+            }
+          
+          });
+          return UserRecipes;
           // console.log(recipes);  // 2
           // return [];             // 2
         }

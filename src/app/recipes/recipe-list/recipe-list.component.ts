@@ -25,20 +25,24 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.recipes = this.recipeService.getRecipes();
     this.subscription = this.recipeService.recipesChanged
       .subscribe(
         (recipes: Recipe[]) => {
           this.recipes = recipes;
         }
       );
-    this.recipes = this.recipeService.getRecipes();
+    
     this.user = this.authService.getUserName();
-    console.log(this.user);
     if (this.user != null){
         console.log('eftase edw');
-        console.log(this.recipes);
+        console.log(this.user);
        this.dataStorageService.getRecipes();
+       console.log(this.recipes);
     }
+    
+    
+    
   }
 
   onNewRecipe() {
@@ -46,6 +50,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    console.log(this.recipes);
     this.subscription.unsubscribe();
   }
 }

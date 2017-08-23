@@ -10,7 +10,6 @@ import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { RecipeItemComponent } from './recipe-list/recipe-item/recipe-item.component';
 import { RecipesRoutingModule } from './recipes-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { RecipesUserFilterPipe } from './recipes-user-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -19,8 +18,8 @@ import { RecipesUserFilterPipe } from './recipes-user-filter.pipe';
     RecipeListComponent,
     RecipeEditComponent,
     RecipeDetailComponent,
-    RecipeItemComponent,
-    RecipesUserFilterPipe
+    RecipeItemComponent
+    
   ],
   imports: [
     CommonModule,
