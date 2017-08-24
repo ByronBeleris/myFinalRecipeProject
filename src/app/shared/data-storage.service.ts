@@ -60,8 +60,13 @@ export class DataStorageService {
             if (user === item.author){
               UserRecipes.push(item);
             }
-          
           });
+          recipes.forEach((item, index) => {
+            if (user !== item.author){
+              UserRecipes.push(item);
+            }
+          });
+
           return UserRecipes;
           // console.log(recipes);  // 2
           // return [];             // 2
@@ -73,10 +78,8 @@ export class DataStorageService {
         }
       );
   }
-  getRecipes() {
-    const token = this.authService.getToken();
-    
-    this.http.get<Recipe[]>('https://course-project-38263.firebaseio.com/recipes.json?auth=' + token) 
+  getRecipes() {    
+    this.http.get<Recipe[]>('https://course-project-38263.firebaseio.com/recipes.json') 
       .map(
         (recipes) => {
           for (let recipe of recipes) {       //  1
@@ -101,6 +104,8 @@ export class DataStorageService {
     return this.http.put('https://course-project-38263.firebaseio.com/shopping-list.json?auth=' + token, this.slService.getIngredients());
   }
   getShoppingList() {
+    const userIngredients: Ingredient[]= [];
+    const user = this.authService.getUserName();
     const token = this.authService.getToken();
     this.http.get<Ingredient[]>('https://course-project-38263.firebaseio.com/shopping-list.json', {
       observe: 'body',
@@ -108,7 +113,7 @@ export class DataStorageService {
     })
       .map(
         (ingredients) => {
-          for (let ingredient of ingredients) {       //  1
+          for (let ingredient of ingredients) {   
             if (!ingredient['author']) {
               ingredient['author'] = '';
             }
@@ -120,7 +125,11 @@ export class DataStorageService {
             }
             
           }
-          return ingredients;
+          ingredients.forEach((item, index) => {
+              userIngredients.push(item);
+            }
+          );
+          return userIngredients;
         }
       )
       .subscribe(

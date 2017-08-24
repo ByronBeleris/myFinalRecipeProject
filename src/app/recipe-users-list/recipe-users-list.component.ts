@@ -30,6 +30,7 @@ export class RecipeUsersListComponent implements OnInit, OnDestroy {
         }
       );
        this.dataStorageService.getRecipes();
+
     }
 
   ngOnDestroy() {

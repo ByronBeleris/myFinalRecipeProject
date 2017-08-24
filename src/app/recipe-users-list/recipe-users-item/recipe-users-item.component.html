@@ -1,16 +1,83 @@
-<div
-style="cursor: pointer;"
-[routerLink]="[index]"
-routerLinkActive="active"
-class="clearfix">
-<div class="float-left rStyle">
-  <h4>{{ recipe.name }}</h4>
-  <p>{{ recipe.description }}</p>
-</div>
-<span class="float-right">
-      <img
-        [src]="recipe.imagePath"
-        alt="{{ recipe.name }}"
-        class="img-responsive">
-    </span>
+
+<div class="card text-center" style="width: 20rem;">
+  <img
+  [src]="recipe.imagePath"
+  alt="{{ recipe.name }}"
+  class="img-responsive">
+  <div class="card-body">
+    <h4 class="card-title"> {{ recipe.name }} </h4>
+    <p class="card-text"> {{ recipe.description }} </p>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">By {{ recipe.author }}</li>
+    </ul>
+    <br>
+    <button class="btn btn-primary" (click)="toggleCollapse()" *ngIf="!show"> More </button>
+    <button type="button" class="btn btn-info" (click)="hideTog()" *ngIf="show">Less </button>
+    <br><br>
+  
+  <ng-template [ngIf]="show">
+      <ul class="list-group">
+          <li
+            class="list-group-item"
+            *ngFor="let ingredient of recipe.ingredients">
+            {{ ingredient.name }} - {{ ingredient.amount }}
+          </li>
+        </ul>
+        <br>
+        <button
+        type="button"
+        class="btn btn-primary" [disabled]="!user" (click)="onAddToShoppingList(); hideTog()">To Shopping List
+      </button>
+      
+    </ng-template>
   </div>
+</div>
+<br>
+
+<!-- <ng-template [ngIf]="show">
+<div class="container">
+<div class="row" >
+  <div class="col-12">
+    <img
+      [src]="recipe.imagePath"
+      alt="{{ recipe.name }}"
+      class="img-responsive"
+      style="max-height: 300px;">
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <h1>{{ recipe.name }}</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12"> 
+      <button
+        type="button"
+        class="btn btn-primary" [disabled]="!user" (click)="onAddToShoppingList(); hideTog()">To Shopping List
+      </button>
+      <button
+        type="button"
+        class="btn btn-info" (click)="hideTog()">Less
+      </button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    {{ recipe.description }}
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        *ngFor="let ingredient of recipe.ingredients">
+        {{ ingredient.name }} - {{ ingredient.amount }}
+      </li>
+    </ul>
+  </div>
+</div>
+</div>
+<br> -->
+<!-- </ng-template> -->
