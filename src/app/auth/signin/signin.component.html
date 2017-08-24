@@ -1,11 +1,11 @@
-<div class="row">
-  <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+<div class="row mySignInStyle">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-sm-offset-1 col-md-offset-2">
     <form (ngSubmit)="onSignin(f)" #f="ngForm">
-      <div class="form-group">
-        <label for="email">Mail</label>
+      <div class="form-group labelButtonStyle">
+        <label for="email">Email</label>
         <input type="email" id="email" name="email" ngModel class="form-control">
       </div>
-      <div class="form-group">
+      <div class="form-group labelButtonStyle">
         <label for="password">Password</label>
         <input
           type="password"
@@ -14,13 +14,15 @@
           ngModel
           class="form-control">
       </div>
+      <div class="labelButtonStyle">
       <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Sign In</button>
-      <div class="form-check">
+    </div>
+      <!-- <div class="form-check">
           <label for="checkbox" class="form-check-label">
             <input class="form-check-input form-control" type="checkbox" id="checkbox" name="checkbox" ngModel>
             Keep me logged in
           </label>
-        </div>
+        </div> -->
     </form>
   </div>
 </div>

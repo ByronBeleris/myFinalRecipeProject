@@ -1,12 +1,6 @@
-/* .active{ */
-    /* background-color: #D0CFCD; */
-  /* /*  border: 2px solid black; */
-    
-/* } */
 img{
     min-height: 110px;
     max-height: 110px; 
-    /* margin:10px; */
     max-width: 150px;
     margin: auto;
 }
