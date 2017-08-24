@@ -15,6 +15,12 @@
           class="form-control">
       </div>
       <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Sign In</button>
+      <div class="form-check">
+          <label for="checkbox" class="form-check-label">
+            <input class="form-check-input form-control" type="checkbox" id="checkbox" name="checkbox" ngModel>
+            Keep me logged in
+          </label>
+        </div>
     </form>
   </div>
 </div>

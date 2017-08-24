@@ -40,7 +40,7 @@ export class DataStorageService {
     const token = this.authService.getToken();
     // const headers = new HttpHeaders().set('Authorization', 'Bearer adfgdsxdfcsd'):  
     //  this wont work with firebase because it makes its own headers
-
+    
     this.http.get<Recipe[]>('https://course-project-38263.firebaseio.com/recipes.json?auth=' + token) // 1
     // this.http.get<Recipe[]>('https://course-project-38263.firebaseio.com/recipes.json', {  //2
       // observe: 'response',
@@ -77,6 +77,7 @@ export class DataStorageService {
           this.recipeService.setRecipes(recipes);
         }
       );
+    
   }
   getRecipes() {    
     this.http.get<Recipe[]>('https://course-project-38263.firebaseio.com/recipes.json') 
@@ -137,5 +138,6 @@ export class DataStorageService {
           this.slService.setIngredients(ingredients);
         }
       );
+    }
   }
-}
+

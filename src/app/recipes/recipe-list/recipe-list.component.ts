@@ -36,10 +36,12 @@ export class RecipeListComponent implements OnInit, OnDestroy {
     this.user = this.authService.getUserName();
     if (this.user != null){
         console.log('eftase edw');
-        console.log(this.user);
+        console.log("to username einai " + this.user);
        this.dataStorageService.getMyRecipes();
        console.log(this.recipes);
     }
+    console.log("to username einai " + this.user);
+    
     
     
     

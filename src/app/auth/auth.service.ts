@@ -6,6 +6,9 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   token: string;
   error: any;
+  email: string;
+  password: string;
+  point: boolean;
 
   constructor(private router: Router) {}
 
@@ -25,6 +28,7 @@ export class AuthService {
           alert(error['message']);
           this.error = error;
         }
+        
 
       );
       if ( this.error === undefined) {
@@ -43,7 +47,13 @@ export class AuthService {
 
   
 
-  signinUser(email: string, password: string) {
+  signinUser(email: string, password: string, point: boolean) {
+    if (point){
+    this.email = email;
+    this.password = password;
+    this.point = point;
+    }
+    
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(
         response => {
@@ -52,21 +62,54 @@ export class AuthService {
             .then(
               (token: string) => {
                 this.token = token;
-                console.log(firebase.auth().currentUser)}
+                console.log(firebase.auth().currentUser)
+                if (this.point) {
+                  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+                }
+              }
             )
         }
       )
       .catch(
         error => console.log(error)
       );
+      
+    
   }
+  // keepLoggedInUser() {
+  //   if (this.point) {
+  //   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+  //   .then(() => {
+  //     // Existing and future Auth states are now persisted in the current
+  //     // session only. Closing the window would clear any existing state even
+  //     // if a user forgets to sign out.
+  //     // ...
+  //     // New sign-in will be persisted with session persistence.
+  //     return firebase.auth().signInWithEmailAndPassword(this.email, this.password);
+  //   })
+  //   .catch((error) => {
+  //     // Handle Errors here.
+  //     this.error = error.message;
+  //   });
+  //   }
+  // }
 
   logout() {
     firebase.auth().signOut()
     this.token = null;
     this.error = undefined;
+    this.email = null;
+    this.password = null;
+    this.point = null;
     console.log(this.error);
     console.log(firebase.auth().currentUser);
+  }
+  destroyUser(){
+    if (this.point) {
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    }else {
+      this.logout();
+    }
   }
 
   getToken() {
@@ -82,10 +125,13 @@ export class AuthService {
   }
   getUserName() {
     const user = firebase.auth().currentUser;
+    console.log(user);    
     let author;
     if (user != null) {
       author = user.displayName;
       return author;
+    }else{
+      return null;
     }
     
   }
