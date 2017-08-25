@@ -7,9 +7,6 @@
   <div class="card-body">
     <h4 class="card-title"> {{ recipe.name }} </h4>
     <p class="card-text"> {{ recipe.description }} </p>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">By {{ recipe.author }}</li>
-    </ul>
     <br>
     <button class="btn btn-primary" (click)="toggleCollapse()" *ngIf="!show"> More </button>
     <button type="button" class="btn btn-info" (click)="hideTog()" *ngIf="show">Less </button>

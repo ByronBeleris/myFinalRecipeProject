@@ -59,39 +59,27 @@ export class AuthService {
         response => {
           this.router.navigate(['/']);
           firebase.auth().currentUser.getIdToken()
+          firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL); 
+        })         
             .then(
               (token: string) => {
                 this.token = token;
                 console.log(firebase.auth().currentUser)
-                if (this.point) {
-                  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-                }
               }
-            )
-        }
-      )
+            )      
       .catch(
         error => console.log(error)
       );
-      
-    
   }
+  
   // keepLoggedInUser() {
-  //   if (this.point) {
   //   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
   //   .then(() => {
-  //     // Existing and future Auth states are now persisted in the current
-  //     // session only. Closing the window would clear any existing state even
-  //     // if a user forgets to sign out.
-  //     // ...
-  //     // New sign-in will be persisted with session persistence.
   //     return firebase.auth().signInWithEmailAndPassword(this.email, this.password);
   //   })
   //   .catch((error) => {
-  //     // Handle Errors here.
   //     this.error = error.message;
   //   });
-  //   }
   // }
 
   logout() {

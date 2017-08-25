@@ -79,7 +79,7 @@ export class DataStorageService {
       );
     
   }
-  getRecipes() {    
+  getRecipes() {   
     this.http.get<Recipe[]>('https://course-project-38263.firebaseio.com/recipes.json') 
       .map(
         (recipes) => {
@@ -108,7 +108,7 @@ export class DataStorageService {
     const userIngredients: Ingredient[]= [];
     const user = this.authService.getUserName();
     const token = this.authService.getToken();
-    this.http.get<Ingredient[]>('https://course-project-38263.firebaseio.com/shopping-list.json', {
+    this.http.get<Ingredient[]>('https://course-project-38263.firebaseio.com/shopping-list.json?', {
       observe: 'body',
       params: new HttpParams().set('auth', token)
     })
@@ -126,11 +126,19 @@ export class DataStorageService {
             }
             
           }
-          ingredients.forEach((item, index) => {
-              userIngredients.push(item);
-            }
-          );
+            ingredients.forEach((item, index) => {
+              if (user === item.author){
+                userIngredients.push(item);
+              }
+            });
+            ingredients.forEach((item, index) => {
+              if (user !== item.author){
+                userIngredients.push(item);
+              }
+            });
+          
           return userIngredients;
+
         }
       )
       .subscribe(
