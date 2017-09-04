@@ -15,11 +15,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     firebase.initializeApp({
-      apiKey: " AIzaSyDT-S__Kw5r14IxAEMrfM6liCgfh10b4tw ",
-      authDomain: "course-project-38263.firebaseio.com"
+      apiKey: ' AIzaSyDT-S__Kw5r14IxAEMrfM6liCgfh10b4tw ',
+      authDomain: 'course-project-38263.firebaseio.com'
     });
     // this.authService.keepLoggedInUser();
-    console.log("mpika prwtos");
+    console.log('Im first');
     this.user = this.authService.getUserName();
     console.log(this.user);
   }

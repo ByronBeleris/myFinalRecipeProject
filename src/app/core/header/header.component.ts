@@ -10,7 +10,7 @@ import { AuthService } from '../../auth/auth.service';
   styleUrls: ['./header.component.css']
   
 })
-export class HeaderComponent {
+export class HeaderComponent{
   show = false;
   showManage = false;
   constructor(private dataStorageService: DataStorageService,
@@ -50,4 +50,6 @@ export class HeaderComponent {
     this.showManage = false;
   }
     
+
+   
 }

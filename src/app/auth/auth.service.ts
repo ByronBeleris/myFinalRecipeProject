@@ -10,7 +10,10 @@ export class AuthService {
   password: string;
   point: boolean;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.token = currentUser && currentUser.token;
+  }
 
   signupUser(email: string, username: string, password: string, photoUser: string) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -58,29 +61,59 @@ export class AuthService {
       .then(
         response => {
           this.router.navigate(['/']);
-          firebase.auth().currentUser.getIdToken()
-          firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL); 
-        })         
+          firebase.auth().currentUser.getIdToken()      
             .then(
               (token: string) => {
                 this.token = token;
-                console.log(firebase.auth().currentUser)
+                console.log(firebase.auth().currentUser);
+                console.log('My token is' + this.token);
+                if (this.token) {
+              localStorage.setItem('currentUser', JSON.stringify({ username: firebase.auth().currentUser.displayName, token: token }));
+                  console.log('LocalStorage is true');
+              } else {
+                console.log('LocalStorage is false');
+                ;
               }
-            )      
+            }
+            )})      
       .catch(
         error => console.log(error)
       );
   }
-  
-  // keepLoggedInUser() {
-  //   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-  //   .then(() => {
-  //     return firebase.auth().signInWithEmailAndPassword(this.email, this.password);
-  //   })
-  //   .catch((error) => {
-  //     this.error = error.message;
-  //   });
+  // signinUser(email: string, password: string, point: boolean) {
+  //   if (point){
+  //   this.email = email;
+  //   this.password = password;
+  //   this.point = point;
+  //   }
+    
+  //   firebase.auth().signInWithEmailAndPassword(email, password)
+  //     .then(
+  //       response => {
+  //         this.router.navigate(['/']);
+  //         firebase.auth().currentUser.getIdToken()
+  //         // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL); 
+  //       })         
+  //           .then(
+  //             (token: string) => {
+  //               this.token = token;
+  //               console.log(firebase.auth().currentUser);
+  //               // console.log(this.token);
+  //             //   if (this.token) {
+  //      //     localStorage.setItem('currentUser', JSON.stringify({ username: firebase.auth().currentUser.displayName, token: token }));
+  //             //     console.log('LocalStorage is true');
+  //             // } else {
+  //             //   console.log('LocalStorage is false');
+  //             //   ;
+  //             // }
+  //           }
+  //           )      
+  //     .catch(
+  //       error => console.log(error)
+  //     );
   // }
+  
+
 
   logout() {
     firebase.auth().signOut()
@@ -89,6 +122,7 @@ export class AuthService {
     this.email = null;
     this.password = null;
     this.point = null;
+    localStorage.removeItem('currentUser');
     console.log(this.error);
     console.log(firebase.auth().currentUser);
   }
@@ -123,13 +157,6 @@ export class AuthService {
     }
     
   }
-  // getPhoto() {
-  //   const user = firebase.auth().currentUser;
-  //   let photo;
-  //   if (user != null) {
-  //     photo = user.photoURL;
-  //     return photo;
-  //   }
-  // }
+
 
 }
