@@ -22,6 +22,8 @@
         <li class="nav-item"><a class="nav-link" (click)="hideTog()" routerLink="/signup">Register</a></li>
         <li class="nav-item"><a class="nav-link" (click)="hideTog()" routerLink="/signin">Login</a></li>
       </ng-template>
+      <li class="nav-item"><a class="nav-link" style="cursor: pointer;" routerLink="/profile" (click)="hideTog()" *ngIf="isAuthenticated()"><span><img [src]="image" alt=""></span> {{ author }}</a></li>
+      
       <li class="nav-item"><a class="nav-link" style="cursor: pointer;" (click)="onLogout(); hideTog()" *ngIf="isAuthenticated()">Logout</a></li>
       
       

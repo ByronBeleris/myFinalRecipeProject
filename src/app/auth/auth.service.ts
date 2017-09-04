@@ -157,6 +157,22 @@ export class AuthService {
     }
     
   }
+  getCurrentUserInfo(){
+    const user = firebase.auth().currentUser;
+    return (user);
+  }
+
+  setCurrentUserInfo(username: string, imagePath: string ) {
+    const user = firebase.auth().currentUser;
+    user.updateProfile({
+      displayName: username,
+      photoURL: imagePath
+    })
+    .catch(
+      error => console.log('Exoume auto to  ' +error)
+    )
+    this.router.navigate(['/profile']);
+  }
 
 
 }

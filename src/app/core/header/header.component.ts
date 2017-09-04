@@ -1,5 +1,5 @@
 // import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { DataStorageService } from '../../shared/data-storage.service';
 import { AuthService } from '../../auth/auth.service';
@@ -10,9 +10,11 @@ import { AuthService } from '../../auth/auth.service';
   styleUrls: ['./header.component.css']
   
 })
-export class HeaderComponent{
+export class HeaderComponent implements OnInit{
   show = false;
   showManage = false;
+  author: string;
+  image: any;
   constructor(private dataStorageService: DataStorageService,
               private authService: AuthService) {
   }
@@ -32,11 +34,21 @@ export class HeaderComponent{
   //   this.dataStorageService.getMyRecipes();
   // }
 
+  
+
   onLogout() {
     this.authService.logout();
   }
 
   isAuthenticated() {
+    
+    this.author = this.authService.getCurrentUserInfo().displayName;
+    if (this.authService.getCurrentUserInfo().photoURL != null){
+      this.image = this.authService.getCurrentUserInfo().photoURL;
+    }else{
+      this.image = 'https://static.pexels.com/photos/5205/food-healthy-vegetables-potatoes.jpg';
+    }
+    console.log('From Header Log. User is: '+ this.author + this.image);
     return this.authService.isAuthenticated();
   }
   toggleCollapse() {
@@ -50,6 +62,10 @@ export class HeaderComponent{
     this.showManage = false;
   }
     
-
+  ngOnInit(){
+    
+  }
    
+
+    
 }
