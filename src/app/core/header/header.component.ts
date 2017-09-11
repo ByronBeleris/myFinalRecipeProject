@@ -13,7 +13,7 @@ import { AuthService } from '../../auth/auth.service';
 export class HeaderComponent implements OnInit{
   show = false;
   showManage = false;
-  author: string;
+  author= 'Guest';
   image: any;
   constructor(private dataStorageService: DataStorageService,
               private authService: AuthService) {
@@ -41,14 +41,16 @@ export class HeaderComponent implements OnInit{
   }
 
   isAuthenticated() {
-    
-    this.author = this.authService.getCurrentUserInfo().displayName;
+    if (this.authService.getCurrentUserInfo()){
     if (this.authService.getCurrentUserInfo().photoURL != null){
       this.image = this.authService.getCurrentUserInfo().photoURL;
+      this.author = this.authService.getCurrentUserInfo().displayName;
     }else{
       this.image = 'https://static.pexels.com/photos/5205/food-healthy-vegetables-potatoes.jpg';
     }
-    console.log('From Header Log. User is: '+ this.author + this.image);
+    } 
+    // console.log('From Header Log. User is: '+ this.author + this.image);
+  
     return this.authService.isAuthenticated();
   }
   toggleCollapse() {

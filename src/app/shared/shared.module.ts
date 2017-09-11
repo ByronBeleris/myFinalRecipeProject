@@ -5,7 +5,8 @@ import { DropdownDirective } from './dropdown.directive';
 
 @NgModule({
   declarations: [
-    DropdownDirective
+    DropdownDirective,
+    
   ],
   exports: [
     CommonModule,

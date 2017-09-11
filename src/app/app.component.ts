@@ -18,16 +18,17 @@ export class AppComponent implements OnInit, OnDestroy {
       apiKey: ' AIzaSyDT-S__Kw5r14IxAEMrfM6liCgfh10b4tw ',
       authDomain: 'course-project-38263.firebaseio.com'
     });
-    // this.authService.keepLoggedInUser();
+    // this.user = localStorage.getItem('currentUser');
     console.log('Im first');
-    this.user = this.authService.getUserName();
     console.log(this.user);
   }
 
   onNavigate(feature: string) {
     this.loadedFeature = feature;
   }
-
+  isAuthenticated(){
+    return this.authService.isAuthenticated();
+  }
 
     ngOnDestroy(){
       this.authService.destroyUser();

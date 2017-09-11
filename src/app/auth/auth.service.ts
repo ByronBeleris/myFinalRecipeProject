@@ -9,6 +9,10 @@ export class AuthService {
   email: string;
   password: string;
   point: boolean;
+  userGuest={
+    displayName: 'Guest',
+    photoURL: null
+  };
 
   constructor(private router: Router) {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -31,8 +35,6 @@ export class AuthService {
           alert(error['message']);
           this.error = error;
         }
-        
-
       );
       if ( this.error === undefined) {
       // this.router.navigate(['/']);               //  Problem with currentUser. Returns null
@@ -58,28 +60,28 @@ export class AuthService {
     }
     
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(
-        response => {
-          this.router.navigate(['/']);
-          firebase.auth().currentUser.getIdToken()      
-            .then(
-              (token: string) => {
-                this.token = token;
-                console.log(firebase.auth().currentUser);
-                console.log('My token is' + this.token);
-                if (this.token) {
-              localStorage.setItem('currentUser', JSON.stringify({ username: firebase.auth().currentUser.displayName, token: token }));
-                  console.log('LocalStorage is true');
-              } else {
-                console.log('LocalStorage is false');
-                ;
-              }
+    .then(
+      response => {
+        this.router.navigate(['/']);
+        firebase.auth().currentUser.getIdToken()      
+          .then(
+            (token: string) => {
+              this.token = token;
+              console.log(firebase.auth().currentUser);
+              console.log('My token is' + this.token);
+              if (this.token) {
+            localStorage.setItem('currentUser', JSON.stringify({ username: firebase.auth().currentUser.displayName, token: token }));
+                console.log('LocalStorage is true');
+            } else {
+              console.log('LocalStorage is false');
+              ;
             }
-            )})      
-      .catch(
-        error => console.log(error)
-      );
-  }
+          }
+          )})      
+    .catch(
+      error => console.log(error)
+    );
+}
   // signinUser(email: string, password: string, point: boolean) {
   //   if (point){
   //   this.email = email;
@@ -122,7 +124,7 @@ export class AuthService {
     this.email = null;
     this.password = null;
     this.point = null;
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
     console.log(this.error);
     console.log(firebase.auth().currentUser);
   }
@@ -143,6 +145,7 @@ export class AuthService {
   }
 
   isAuthenticated() {
+    // this.token = localStorage.getItem('token');
     return this.token != null;
   }
   getUserName() {
@@ -169,7 +172,7 @@ export class AuthService {
       photoURL: imagePath
     })
     .catch(
-      error => console.log('Exoume auto to  ' +error)
+      error => console.log('Exoume auto to  ' + error)
     )
     this.router.navigate(['/profile']);
   }
