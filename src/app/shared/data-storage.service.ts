@@ -12,6 +12,7 @@ import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class DataStorageService {
+  token;
   constructor(private http: HttpClient,
               private recipeService: RecipeService,
               private authService: AuthService,
@@ -35,13 +36,19 @@ export class DataStorageService {
   }
 
   getMyRecipes() {
+    if (localStorage.getItem('token')){
+      this.token = localStorage.getItem('token');
+    }else{
+      this.token = this.authService.getToken();
+    }
     const UserRecipes: Recipe[] = [];
     const user = this.authService.getUserName();
-    const token = this.authService.getToken();
+    
+    console.log('apo data-storage '+ this.token);
     // const headers = new HttpHeaders().set('Authorization', 'Bearer adfgdsxdfcsd'):  
     //  this wont work with firebase because it makes its own headers
     
-    this.http.get<Recipe[]>('https://course-project-38263.firebaseio.com/recipes.json?auth=' + token) // 1
+    this.http.get<Recipe[]>('https://course-project-38263.firebaseio.com/recipes.json?auth=' + this.token) // 1
     // this.http.get<Recipe[]>('https://course-project-38263.firebaseio.com/recipes.json', {  //2
       // observe: 'response',
       // observe: 'body',
@@ -66,7 +73,7 @@ export class DataStorageService {
               UserRecipes.push(item);
             }
           });
-
+          // console.log(recipes);
           return UserRecipes;
           // console.log(recipes);  // 2
           // return [];             // 2
@@ -107,10 +114,14 @@ export class DataStorageService {
   getShoppingList() {
     const userIngredients: Ingredient[]= [];
     const user = this.authService.getUserName();
-    const token = this.authService.getToken();
+    if (localStorage.getItem('token')){
+      this.token = localStorage.getItem('token');
+    }else{
+      this.token = this.authService.getToken();
+    }
     this.http.get<Ingredient[]>('https://course-project-38263.firebaseio.com/shopping-list.json?', {
       observe: 'body',
-      params: new HttpParams().set('auth', token)
+      params: new HttpParams().set('auth', this.token)
     })
       .map(
         (ingredients) => {

@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class RecipeUsersListComponent implements OnInit, OnDestroy {
   recipes: Recipe[];
+  subscription: Subscription;
 
   constructor(private recipeService: RecipeService,
               private router: Router,
@@ -23,11 +24,19 @@ export class RecipeUsersListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.dataStorageService.getRecipes();
     this.recipes = this.recipeService.getRecipes();
-  
+    this.subscription = this.recipeService.recipesChanged
+    .subscribe(
+      (recipes: Recipe[]) => {
+        this.recipes = recipes;
+        console.log('1223');
+        console.log(recipes);
+      }
+    );
 
     }
 
-  ngOnDestroy() {
-    console.log(this.recipes);
-  }
+    ngOnDestroy() {
+      console.log(this.recipes);
+      this.subscription.unsubscribe();
+    }
 }

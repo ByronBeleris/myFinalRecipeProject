@@ -25,26 +25,31 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.user = this.authService.getUserName();
+
+    this.dataStorageService.getMyRecipes();
     this.recipes = this.recipeService.getRecipes();
     this.subscription = this.recipeService.recipesChanged
       .subscribe(
         (recipes: Recipe[]) => {
           this.recipes = recipes;
+          console.log('1223');
+          console.log(recipes);
         }
       );
-    
-    this.user = this.authService.getUserName();
-    if (this.user != null){
-        console.log('eftase edw');
-        console.log("to username einai " + this.user);
-       this.dataStorageService.getMyRecipes();
-       console.log(this.recipes);
-    }
-    console.log("to username einai " + this.user);
-    
-    
-    
-    
+    const name = JSON.parse(localStorage.getItem('currentUser'));
+    this.user = name.username;
+
+    // this.user = this.authService.getUserName();
+
+    console.log('Kalispera' + this.user.username);
+    // if (this.user != null){
+    //     console.log('eftase edw');
+    //     console.log("to username einai " + this.user);
+    //   //  this.dataStorageService.getMyRecipes();
+    //    console.log(this.recipes);
+    // }
+    // console.log("to username einai " + this.user); 
   }
 
   onNewRecipe() {

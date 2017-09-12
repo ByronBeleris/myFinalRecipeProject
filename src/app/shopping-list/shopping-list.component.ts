@@ -21,6 +21,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
               private authService: AuthService) { }
 
   ngOnInit() {
+    this.dataStorageService.getShoppingList();
     this.ingredients = this.slService.getIngredients();
     this.subscription = this.slService.ingredientsChanged
       .subscribe(
@@ -28,12 +29,13 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
           this.ingredients = ingredients;
         }
       );
-      this.user = this.authService.getUserName();
-      console.log(this.user);
-      if (this.user != null){
-         this.dataStorageService.getShoppingList();
+      const name = JSON.parse(localStorage.getItem('currentUser'));
+      this.user = name.username;
+      console.log('apo s list   '+ this.user);
+      console.log(this.ingredients);
       }
-  }
+  
+ 
 
   onEditItem(index: number) {
     this.slService.startedEditing.next(index);

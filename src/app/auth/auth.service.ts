@@ -71,6 +71,7 @@ export class AuthService {
               console.log('My token is' + this.token);
               if (this.token) {
             localStorage.setItem('currentUser', JSON.stringify({ username: firebase.auth().currentUser.displayName, token: token }));
+            localStorage.setItem('token', this.token );
                 console.log('LocalStorage is true');
             } else {
               console.log('LocalStorage is false');
@@ -125,6 +126,7 @@ export class AuthService {
     this.password = null;
     this.point = null;
     localStorage.removeItem('token');
+    localStorage.removeItem('currentUser');
     console.log(this.error);
     console.log(firebase.auth().currentUser);
   }

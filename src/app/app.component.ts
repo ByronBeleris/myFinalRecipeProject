@@ -1,3 +1,4 @@
+import { DataStorageService } from './shared/data-storage.service';
 import { AuthService } from './auth/auth.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
@@ -11,7 +12,8 @@ export class AppComponent implements OnInit, OnDestroy {
   loadedFeature = 'recipe';
   user: any;
 
-  constructor(private authService: AuthService){}
+  constructor(private authService: AuthService,
+              private dataStorageService: DataStorageService){}
 
   ngOnInit() {
     firebase.initializeApp({
@@ -21,6 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
     // this.user = localStorage.getItem('currentUser');
     console.log('Im first');
     console.log(this.user);
+    
   }
 
   onNavigate(feature: string) {
