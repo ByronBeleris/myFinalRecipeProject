@@ -21,8 +21,8 @@ export class AppComponent implements OnInit, OnDestroy {
       authDomain: 'course-project-38263.firebaseio.com'
     });
     // this.user = localStorage.getItem('currentUser');
-    console.log('Im first');
-    console.log(this.user);
+    // console.log('Im first');
+    // console.log(this.user);
     
   }
 

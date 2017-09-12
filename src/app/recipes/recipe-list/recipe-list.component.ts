@@ -33,8 +33,8 @@ export class RecipeListComponent implements OnInit, OnDestroy {
       .subscribe(
         (recipes: Recipe[]) => {
           this.recipes = recipes;
-          console.log('1223');
-          console.log(recipes);
+          // console.log('1223');
+          // console.log(recipes);
         }
       );
     const name = JSON.parse(localStorage.getItem('currentUser'));
@@ -42,7 +42,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
 
     // this.user = this.authService.getUserName();
 
-    console.log('Kalispera' + this.user.username);
+    // console.log('Kalispera' + this.user.username);
     // if (this.user != null){
     //     console.log('eftase edw');
     //     console.log("to username einai " + this.user);
@@ -57,7 +57,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log(this.recipes);
+    // console.log(this.recipes);
     this.subscription.unsubscribe();
   }
 }

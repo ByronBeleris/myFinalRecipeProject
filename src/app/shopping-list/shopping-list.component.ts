@@ -31,8 +31,8 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
       );
       const name = JSON.parse(localStorage.getItem('currentUser'));
       this.user = name.username;
-      console.log('apo s list   '+ this.user);
-      console.log(this.ingredients);
+      // console.log('apo s list   '+ this.user);
+      // console.log(this.ingredients);
       }
   
  

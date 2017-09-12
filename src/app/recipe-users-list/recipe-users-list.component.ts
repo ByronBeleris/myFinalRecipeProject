@@ -28,15 +28,15 @@ export class RecipeUsersListComponent implements OnInit, OnDestroy {
     .subscribe(
       (recipes: Recipe[]) => {
         this.recipes = recipes;
-        console.log('1223');
-        console.log(recipes);
+        // console.log('1223');
+        // console.log(recipes);
       }
     );
 
     }
 
     ngOnDestroy() {
-      console.log(this.recipes);
+      // console.log(this.recipes);
       this.subscription.unsubscribe();
     }
 }

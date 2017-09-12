@@ -27,7 +27,7 @@ export class AuthService {
           photoURL: photoUser
         });
         console.log(this.error);
-        console.log(firebase.auth().currentUser);
+        // console.log(firebase.auth().currentUser);
       })
       .catch(
         error => {
@@ -67,8 +67,8 @@ export class AuthService {
           .then(
             (token: string) => {
               this.token = token;
-              console.log(firebase.auth().currentUser);
-              console.log('My token is' + this.token);
+              // console.log(firebase.auth().currentUser);
+              // console.log('My token is' + this.token);
               if (this.token) {
             localStorage.setItem('currentUser', JSON.stringify({ username: firebase.auth().currentUser.displayName, token: token }));
             localStorage.setItem('token', this.token );
@@ -127,8 +127,8 @@ export class AuthService {
     this.point = null;
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
-    console.log(this.error);
-    console.log(firebase.auth().currentUser);
+    // console.log(this.error);
+    // console.log(firebase.auth().currentUser);
   }
   destroyUser(){
     if (this.point) {
@@ -174,7 +174,7 @@ export class AuthService {
       photoURL: imagePath
     })
     .catch(
-      error => console.log('Exoume auto to  ' + error)
+      error => console.log(error)
     )
     this.router.navigate(['/profile']);
   }

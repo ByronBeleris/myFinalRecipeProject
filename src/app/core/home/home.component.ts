@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
 
    ngOnInit() {
     this.user = localStorage.getItem('currentUser');
-    console.log('apo to home' + this.user);
+    // console.log('apo to home' + this.user);
    
     this.user = this.authService.getUserName();
    
